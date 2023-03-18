@@ -1,0 +1,44 @@
+pipeline
+{ agent any
+tools {
+    maven "MAVEN3" 
+          jdk "OracleJDK8" }
+          stages { 
+              stage('Checkout')
+                  { steps {
+                      checkout([ 
+                          $class: 'GitSCM',
+                          branches: [[name: '*/main']], 
+                              extensions: [],
+                              
+                               userRemoteConfigs: [[
+                                   credentialsId: 'jenkinsadmin123',
+                                    url:'https://github.com/Apeksha-28/sap.git'
+                                    
+                                    ]]
+                                   ])
+                                 } 
+                      
+                  }
+                    stage('Build') {
+                           steps{
+                               echo 'deploy app'
+                           }
+                    }
+          }
+          post{
+        always{
+            mail to: "pratik.pingale@virtuososofttech.com",
+            subject: " Wesites ULR'S Test Email",
+            body: "Hi  "
+        }
+    }
+}
+                 
+                 
+                       
+                          
+           
+         
+    
+
